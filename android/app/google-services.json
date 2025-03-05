@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "259722419607",
+    "project_id": "nave-stg",
+    "storage_bucket": "nave-stg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259722419607:android:36e21f85cdb9de981878d2",
+        "android_client_info": {
+          "package_name": "com.example.nave_fp_uol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnyFAx3vCm6uT5LlvBWOdtI-5tR3zkJk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259722419607:android:a6b98f88e068b2231878d2",
+        "android_client_info": {
+          "package_name": "com.marquesbueno.nave.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnyFAx3vCm6uT5LlvBWOdtI-5tR3zkJk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
