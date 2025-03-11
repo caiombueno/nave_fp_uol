@@ -2,26 +2,34 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:nave_fp_uol/env/env.dart';
 import 'package:nave_fp_uol/firebase_options.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/core/field_value_mapper.dart';
+import 'package:nave_fp_uol/src/service_locator.dart';
+import 'package:nave_fp_uol/src/services/analytics/analytics_client.dart';
+import 'package:nave_fp_uol/src/services/analytics/core/analytics_navigator_observer.dart';
+import 'package:nave_fp_uol/src/ui/features/router.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timezone/data/latest_all.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  _initDartMappable();
-
-  initializeTimeZones();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  _initDartMappable();
+
+  initializeTimeZones();
+
+  await loadServiceLocator();
+
   await _initSentry();
 
-  runApp(const MainApp()
+  runApp(const MyApp()
       // SentryWidget(
       //   child: const MainApp(),
       // ),
@@ -53,17 +61,32 @@ Future<void> _initSentry() => SentryFlutter.init(
       },
     );
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
+      routerConfig: sl<AppRouter>().config(
+        includePrefixMatches: true,
+        navigatorObservers: () => [
+          SentryNavigatorObserver(),
+          AnalyticsNavigatorObserver(
+            sl<AnalyticsClient>(),
+          ),
+        ],
+      ),
+      localizationsDelegates: [
+        ...AppLocalizations.localizationsDelegates,
+        FlutterQuillLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
