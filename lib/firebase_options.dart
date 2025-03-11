@@ -42,12 +42,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBIWjK0njA5QDK9Ish3GtylGljBBBrjBIQ',
-    appId: '1:259722419607:web:9da2e609f075ad511878d2',
+    appId: '1:259722419607:web:9d3322da873bcdea1878d2',
     messagingSenderId: '259722419607',
     projectId: 'nave-stg',
     authDomain: 'nave-stg.firebaseapp.com',
     storageBucket: 'nave-stg.firebasestorage.app',
-    measurementId: 'G-MBGFVHQSNM',
+    measurementId: 'G-GLLGHTDPBP',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'nave-stg.firebasestorage.app',
     measurementId: 'G-GLLGHTDPBP',
   );
+
 }
