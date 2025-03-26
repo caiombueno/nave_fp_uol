@@ -36,27 +36,32 @@ class TaskDetailsLessonListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = this.title;
-    return ListTile(
-      onTap: onTap,
-      horizontalTitleGap:
-          KnotSemanticSpacings.taskDetailsLessonListTileHorizontalTitleGap,
-      contentPadding: EdgeInsets.zero,
-      visualDensity: VisualDensity.compact,
-      minVerticalPadding: 0,
-      minLeadingWidth: 0,
-      leading: (icon == null)
-          ? null
-          : Icon(
-              icon,
-              color: KnotSemanticColors.taskDetailsLessonListTileIcon,
-              size: KnotSemanticSizings.taskDetailsLessonListTileIcon,
-            ),
-      title: (title != null)
-          ? Text(
-              title,
-              style: KnotSemanticTextStyles.taskDetailsLessonListTileTitle,
-            )
-          : null,
+    return Material(
+      color: Colors.transparent,
+      child: ListTile(
+        onTap: onTap,
+        selected: true,
+        enableFeedback: true,
+        horizontalTitleGap:
+            KnotSemanticSpacings.taskDetailsLessonListTileHorizontalTitleGap,
+        contentPadding: EdgeInsets.zero,
+        visualDensity: VisualDensity.compact,
+        minVerticalPadding: 0,
+        minLeadingWidth: 0,
+        leading: (icon == null)
+            ? null
+            : Icon(
+                icon,
+                color: KnotSemanticColors.taskDetailsLessonListTileIcon,
+                size: KnotSemanticSizings.taskDetailsLessonListTileIcon,
+              ),
+        title: (title != null)
+            ? Text(
+                title,
+                style: KnotSemanticTextStyles.taskDetailsLessonListTileTitle,
+              )
+            : null,
+      ),
     );
   }
 }

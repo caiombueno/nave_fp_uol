@@ -12,7 +12,7 @@ extension on Task {
     final isUserTask = this is UserTask;
 
     return TaskDetailsTaskVM(
-      title: title ?? '',
+      title: title,
       descriptionContent: quillDescriptionContent,
       isUserTask: isUserTask,
       lessons: lessons,
@@ -43,30 +43,16 @@ extension on List<Lesson> {
 }
 
 extension on Lesson {
-  TaskDetailsLessonVM toTaskDetailsLessonVM() {
-    return switch (this) {
-      TextLesson lesson => TaskDetailsTextLessonVM(
-          id: lesson.id,
-          title: lesson.title,
-          isCompleted: lesson.isCompleted,
-        ),
-      VideoLesson lesson => TaskDetailsVideoLessonVM(
-          id: lesson.id,
-          title: lesson.title,
-          isCompleted: lesson.isCompleted,
-        ),
-    };
-  }
-}
-
-extension on String {
-  quill.Document? toQuillDocumentOrNull() {
-    try {
-      final parsedString = jsonDecode(this);
-
-      return quill.Document.fromJson(parsedString);
-    } catch (_) {
-      return null;
-    }
-  }
+  TaskDetailsLessonVM toTaskDetailsLessonVM() => switch (this) {
+        TextLesson lesson => TaskDetailsTextLessonVM(
+            id: lesson.id,
+            title: lesson.title,
+            isCompleted: lesson.isCompleted,
+          ),
+        VideoLesson lesson => TaskDetailsVideoLessonVM(
+            id: lesson.id,
+            title: lesson.title,
+            isCompleted: lesson.isCompleted,
+          ),
+      };
 }

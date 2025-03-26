@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class KnotInProgressTextButton extends StatelessWidget {
   const KnotInProgressTextButton({
     required this.label,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final String label;
 

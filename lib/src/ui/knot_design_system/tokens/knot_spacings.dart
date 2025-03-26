@@ -31,8 +31,24 @@ abstract class KnotSemanticSpacings {
       KnotCoreSpacings.medium;
 
   static const double taskDetailsLessonListTileHorizontalTitleGap =
-      KnotCoreSpacings.xSmall;
+      KnotCoreSpacings.small;
 
   static const double taskDetailsLessonsSectionLeadingGap =
       KnotCoreSpacings.xSmall;
+
+  static const double taskDetailsScreenSectionGap = KnotCoreSpacings.medium;
+
+  static const double taskDetailsNotesSectionHeaderLeadingGap =
+      KnotCoreSpacings.xSmall;
+
+  static const double taskDetailsLessonNotesSectionTitleContentGap =
+      KnotCoreSpacings.small;
+
+  static const double taskDetailsLessonNotesGap = KnotCoreSpacings.small;
+
+  static const double textLessonLoadedViewHorizontalPadding =
+      KnotCoreSpacings.xLarge;
+
+  static const double textLessonLoadedViewVerticalPadding =
+      KnotCoreSpacings.mediumLarge;
 }

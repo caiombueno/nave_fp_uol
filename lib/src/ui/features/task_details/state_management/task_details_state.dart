@@ -1,5 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/quill_delta.dart' as quill;
 
 part 'generated/task_details_state.mapper.dart';
 
@@ -40,7 +40,7 @@ class TaskDetailsTaskVM with TaskDetailsTaskVMMappable {
   });
 
   final String? title;
-  final quill.Document? descriptionContent;
+  final quill.Delta? descriptionContent;
   final bool isUserTask;
   final List<TaskDetailsLessonVM>? lessons;
   final List<TaskDetailsNoteVM>? notes;
@@ -82,7 +82,7 @@ class TaskDetailsVideoLessonVM extends TaskDetailsLessonVM
 @MappableClass()
 class TaskDetailsNoteVM with TaskDetailsNoteVMMappable {
   final String id;
-  final quill.Document? content;
+  final quill.Delta? content;
 
   const TaskDetailsNoteVM({
     required this.id,

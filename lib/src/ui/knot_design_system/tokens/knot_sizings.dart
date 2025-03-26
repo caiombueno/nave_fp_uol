@@ -25,4 +25,7 @@ abstract class KnotSemanticSizings {
   static const double kanbanCardLeadingIcon = KnotCoreSizings.size2x;
 
   static const double taskDetailsLessonListTileIcon = KnotCoreSizings.size3x;
+
+  static const double taskDetailsLessonNotesSectionLeadingIcon =
+      KnotCoreSizings.size3x;
 }

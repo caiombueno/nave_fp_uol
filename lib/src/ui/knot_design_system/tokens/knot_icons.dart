@@ -11,10 +11,8 @@
 ///      fonts:
 ///       - asset: fonts/KnotIcons.ttf
 ///
+/// 
 ///
-///
-library;
-
 import 'package:flutter/widgets.dart';
 
 class KnotIcons {
@@ -23,14 +21,11 @@ class KnotIcons {
   static const _kFontFam = 'KnotIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData document =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData menu =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData video =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData checklist =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData comments =
-      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData document = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData menu = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData video = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData checklist = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData comments = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData trash = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

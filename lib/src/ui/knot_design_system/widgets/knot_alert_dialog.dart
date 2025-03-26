@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class KnotAlertDialog extends AlertDialog {
   KnotAlertDialog({
-    super.key,
     required BuildContext context,
     required String? title,
     required String? message,
@@ -13,11 +12,10 @@ class KnotAlertDialog extends AlertDialog {
           content: message != null ? Text(message) : null,
           actions: [
             TextButton(
-              onPressed: onCtaPressed ??
-                  () {
-                    Navigator.of(context).pop();
-                  },
               child: Text(ctaLabel),
+              onPressed: onCtaPressed ?? () {
+                Navigator.of(context).pop();
+              },
             ),
           ],
         );

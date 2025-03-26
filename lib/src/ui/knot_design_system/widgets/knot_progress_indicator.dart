@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
 class KnotProgressIndicator extends StatelessWidget {
-  const KnotProgressIndicator({Key? key}) : super(key: key);
+  const KnotProgressIndicator({
+    Key? key,
+    this.color,
+  }) : super(key: key);
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Center(
+      child: CircularProgressIndicator(
+        color: color,
+      ),
     );
   }
 }

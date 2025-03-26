@@ -422,9 +422,9 @@ class TaskDetailsTaskVMMapper extends ClassMapperBase<TaskDetailsTaskVM> {
   static bool _$isUserTask(TaskDetailsTaskVM v) => v.isUserTask;
   static const Field<TaskDetailsTaskVM, bool> _f$isUserTask =
       Field('isUserTask', _$isUserTask);
-  static quill.Document? _$descriptionContent(TaskDetailsTaskVM v) =>
+  static quill.Delta? _$descriptionContent(TaskDetailsTaskVM v) =>
       v.descriptionContent;
-  static const Field<TaskDetailsTaskVM, quill.Document> _f$descriptionContent =
+  static const Field<TaskDetailsTaskVM, quill.Delta> _f$descriptionContent =
       Field('descriptionContent', _$descriptionContent);
   static List<TaskDetailsLessonVM>? _$lessons(TaskDetailsTaskVM v) => v.lessons;
   static const Field<TaskDetailsTaskVM, List<TaskDetailsLessonVM>> _f$lessons =
@@ -517,7 +517,7 @@ abstract class TaskDetailsTaskVMCopyWith<$R, $In extends TaskDetailsTaskVM,
   $R call(
       {String? title,
       bool? isUserTask,
-      quill.Document? descriptionContent,
+      quill.Delta? descriptionContent,
       List<TaskDetailsLessonVM>? lessons,
       List<TaskDetailsNoteVM>? notes});
   TaskDetailsTaskVMCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -657,8 +657,8 @@ class TaskDetailsNoteVMMapper extends ClassMapperBase<TaskDetailsNoteVM> {
 
   static String _$id(TaskDetailsNoteVM v) => v.id;
   static const Field<TaskDetailsNoteVM, String> _f$id = Field('id', _$id);
-  static quill.Document? _$content(TaskDetailsNoteVM v) => v.content;
-  static const Field<TaskDetailsNoteVM, quill.Document> _f$content =
+  static quill.Delta? _$content(TaskDetailsNoteVM v) => v.content;
+  static const Field<TaskDetailsNoteVM, quill.Delta> _f$content =
       Field('content', _$content);
 
   @override
@@ -727,7 +727,7 @@ extension TaskDetailsNoteVMValueCopy<$R, $Out>
 
 abstract class TaskDetailsNoteVMCopyWith<$R, $In extends TaskDetailsNoteVM,
     $Out> implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, quill.Document? content});
+  $R call({String? id, quill.Delta? content});
   TaskDetailsNoteVMCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }

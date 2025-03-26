@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nave_fp_uol/src/ui/features/task_details/state_management/task_details_cubit.dart';
 import 'package:nave_fp_uol/src/ui/features/task_details/state_management/task_details_state.dart';
+import 'package:nave_fp_uol/src/ui/features/task_details/widgets/task_content_editor_modal_bottom_sheet.dart';
 import 'package:nave_fp_uol/src/ui/features/task_details/widgets/task_details_notes_section/widgets/task_details_note_card.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_icons.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_sizings.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_spacings.dart';
+import 'package:nave_fp_uol/src/utils/extensions/build_context_extensions.dart';
 
 class TaskDetailsNotesSection extends StatelessWidget {
   const TaskDetailsNotesSection({
@@ -15,6 +20,9 @@ class TaskDetailsNotesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notes = this.notes;
+
+    final l10n = context.l10n;
+
     return Column(
       children: [
         Padding(
@@ -22,35 +30,63 @@ class TaskDetailsNotesSection extends StatelessWidget {
             horizontal:
                 KnotSemanticSpacings.taskDetailsSectionHorizontalPadding,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(KnotIcons.comments),
-                  const SizedBox(width: 4),
-                  Text('Anotações'),
+                  Row(
+                    children: [
+                      Icon(
+                        KnotIcons.comments,
+                        color: KnotCoreColors.darkGrey,
+                      ),
+                      const SizedBox(
+                        width: KnotSemanticSpacings
+                            .taskDetailsNotesSectionHeaderLeadingGap,
+                      ),
+                      Text(
+                        l10n.taskDetailsNotesSectionTitle,
+                        style: TextStyle(color: KnotCoreColors.darkGrey),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      TextContentEditorModalBottomSheet.show(
+                        context,
+                        title: l10n.taskDetailsNotesSectionAddNoteModalTitle,
+                        hintText: l10n.taskDetailsNotesSectionAddNoteModalHint,
+                        onConcluded: (content) {
+                          final cubit = context.read<TaskDetailsCubit>();
+
+                          cubit.createNote(content: content);
+                        },
+                      );
+                    },
+                    iconSize: KnotSemanticSizings
+                        .taskDetailsLessonNotesSectionLeadingIcon,
+                    style: IconButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      visualDensity: VisualDensity.compact,
+                      splashFactory: NoSplash.splashFactory,
+                    ),
+                    icon: Icon(
+                      Icons.add,
+                      color: KnotCoreColors.blue,
+                    ),
+                  ),
                 ],
-              ),
-              IconButton(
-                onPressed: () {},
-                iconSize: 24,
-                style: IconButton.styleFrom(
-                  padding: const EdgeInsets.all(0),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: VisualDensity.compact,
-                  splashFactory: NoSplash.splashFactory,
-                ),
-                icon: Icon(
-                  Icons.add,
-                  color: KnotCoreColors.blue,
-                ),
               ),
             ],
           ),
         ),
         if (notes != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(
+            height: KnotSemanticSpacings
+                .taskDetailsLessonNotesSectionTitleContentGap,
+          ),
           TaskDetailsNotesListView(notes: notes),
         ],
       ],
@@ -75,12 +111,15 @@ class TaskDetailsNotesListView extends StatelessWidget {
         if (content == null) return null;
 
         return TaskDetailsNoteCard(
-          key: ValueKey(index),
+          key: ValueKey(note),
+          noteId: note.id,
           content: content,
         );
       },
       separatorBuilder: (context, index) {
-        return const SizedBox(height: 8);
+        return const SizedBox(
+          height: KnotSemanticSpacings.taskDetailsLessonNotesGap,
+        );
       },
       itemCount: notes.length,
     );

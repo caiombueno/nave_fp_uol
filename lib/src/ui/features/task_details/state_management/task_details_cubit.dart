@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:nave_fp_uol/src/service_locator.dart';
+import 'package:nave_fp_uol/service_locator.dart';
 import 'package:nave_fp_uol/src/data/repositories/task/task_repository.dart';
 import 'package:nave_fp_uol/src/domain_models/lesson.dart';
 import 'package:nave_fp_uol/src/domain_models/note.dart';
 import 'package:nave_fp_uol/src/domain_models/task.dart';
 import 'package:nave_fp_uol/src/ui/features/task_details/state_management/task_details_state.dart';
+import 'package:nave_fp_uol/src/utils/extensions/flutter_quill_extensions.dart';
 
 part 'task_details_mappers.dart';
 
@@ -52,6 +51,68 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
   late final StreamSubscription _taskSubscription;
 
   final _taskRepository = sl<TaskRepository>();
+
+  void createNote({
+    required List<Map<String, dynamic>> content,
+  }) {
+    final state = this.state;
+
+    if (state is! TaskDetailsLoaded) {
+      return;
+    }
+
+    final encodedContent = content.toEncodedContentOrNull();
+
+    if (encodedContent == null) {
+      return;
+    }
+
+    _taskRepository.createNote(
+      taskId: taskId,
+      content: encodedContent,
+      isSystemTask: !state.task.isUserTask,
+    );
+  }
+
+  void deleteNote({
+    required String noteId,
+  }) {
+    final state = this.state;
+
+    if (state is! TaskDetailsLoaded) {
+      return;
+    }
+
+    _taskRepository.deleteNote(
+      taskId: taskId,
+      noteId: noteId,
+      isSystemTask: !state.task.isUserTask,
+    );
+  }
+
+  void editNote({
+    required String noteId,
+    required List<Map<String, dynamic>> content,
+  }) {
+    final state = this.state;
+
+    if (state is! TaskDetailsLoaded) {
+      return;
+    }
+
+    final encodedContent = content.toEncodedContentOrNull();
+
+    if (encodedContent == null) {
+      return;
+    }
+
+    _taskRepository.updateNote(
+      taskId: taskId,
+      noteId: noteId,
+      content: encodedContent,
+      isSystemTask: !state.task.isUserTask,
+    );
+  }
 
   @override
   Future<void> close() {

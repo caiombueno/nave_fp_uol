@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/quill_delta.dart' as quill;
 import 'package:nave_fp_uol/src/ui/features/task_details/state_management/task_details_state.dart';
 import 'package:nave_fp_uol/src/ui/features/task_details/widgets/task_details_description.dart';
 import 'package:nave_fp_uol/src/ui/features/task_details/widgets/task_details_lessons_section.dart';
 import 'package:nave_fp_uol/src/ui/features/task_details/widgets/task_details_notes_section/task_details_notes_section.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_spacings.dart';
 
 class TaskDetailsLoadedView extends StatelessWidget {
   const TaskDetailsLoadedView({
@@ -13,7 +14,7 @@ class TaskDetailsLoadedView extends StatelessWidget {
     required this.lessons,
     required this.notes,
   });
-  final quill.Document? descriptionContent;
+  final quill.Delta? descriptionContent;
   final bool isUserTask;
   final List<TaskDetailsLessonVM>? lessons;
   final List<TaskDetailsNoteVM>? notes;
@@ -21,7 +22,13 @@ class TaskDetailsLoadedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lessons = this.lessons;
+
     final descriptionContent = this.descriptionContent;
+
+    const sectionGap = const SizedBox(
+      height: KnotSemanticSpacings.taskDetailsScreenSectionGap,
+    );
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -34,11 +41,11 @@ class TaskDetailsLoadedView extends StatelessWidget {
               isUserTask: isUserTask,
             ),
           if (lessons != null) ...[
-            const SizedBox(height: 14),
+            sectionGap,
             TaskDetailsLessonsSection(lessons: lessons),
           ],
           if (notes != null) ...[
-            const SizedBox(height: 14),
+            sectionGap,
             TaskDetailsNotesSection(notes: notes),
           ],
         ],

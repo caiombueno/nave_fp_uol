@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 
 class KnotExpandedElevatedButton extends StatelessWidget {
   static const double _elevatedButtonHeight = 48;
@@ -7,8 +8,8 @@ class KnotExpandedElevatedButton extends StatelessWidget {
     required this.label,
     this.onTap,
     this.icon,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   KnotExpandedElevatedButton.inProgress({
     required String label,
@@ -34,6 +35,10 @@ class KnotExpandedElevatedButton extends StatelessWidget {
       width: double.infinity,
       child: icon != null
           ? ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    KnotSemanticColors.knotExpandedElevatedButtonBackground,
+              ),
               onPressed: onTap,
               label: Text(
                 label,
@@ -41,6 +46,10 @@ class KnotExpandedElevatedButton extends StatelessWidget {
               icon: icon,
             )
           : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    KnotSemanticColors.knotExpandedElevatedButtonBackground,
+              ),
               onPressed: onTap,
               child: Text(
                 label,

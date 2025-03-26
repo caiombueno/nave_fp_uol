@@ -4,16 +4,18 @@ import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 class KnotExpansionTile extends StatefulWidget {
   final Widget title;
   final Widget child;
+  final bool initiallyExpanded;
   final Widget? leading;
   final double? leadingGap;
 
   const KnotExpansionTile({
     required this.title,
     required this.child,
+    this.initiallyExpanded = true,
     this.leading,
     this.leadingGap,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   _KnotExpansionTileState createState() => _KnotExpansionTileState();
@@ -21,7 +23,7 @@ class KnotExpansionTile extends StatefulWidget {
 
 class _KnotExpansionTileState extends State<KnotExpansionTile>
     with SingleTickerProviderStateMixin {
-  bool _isExpanded = false;
+  late bool _isExpanded;
 
   late final AnimationController _controller;
 
@@ -29,7 +31,8 @@ class _KnotExpansionTileState extends State<KnotExpansionTile>
 
   @override
   void initState() {
-    super.initState();
+    _isExpanded = widget.initiallyExpanded;
+
     _controller = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
@@ -44,6 +47,7 @@ class _KnotExpansionTileState extends State<KnotExpansionTile>
         curve: Curves.easeInOut,
       ),
     );
+    super.initState();
   }
 
   void _toggleExpansion() {
