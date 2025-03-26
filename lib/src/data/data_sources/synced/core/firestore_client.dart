@@ -108,7 +108,7 @@ extension on DocumentReference {
 
         if (snapshot.metadata.isFromCache) {
           return left<Failure, T>(
-            const NoInternetFailure(),
+            NoInternetFailure(),
           );
         }
       }
@@ -133,7 +133,7 @@ extension on CollectionReference {
           snapshot.metadata.isFromCache &&
           assumeCollectionExists) {
         return left<Failure, List<T>>(
-          const NoInternetFailure(),
+          NoInternetFailure(),
         );
       }
 
@@ -152,7 +152,7 @@ extension on CollectionReference {
 }
 
 extension<T> on Stream<Either<Failure, T>> {
-  Stream<Either<Failure, T>> parseFirestoreErrors() {
+  Stream<Either<Failure, T>> parseFirestoreErrors<T>() {
     return transform(
       StreamTransformer.fromHandlers(
         handleError: (exception, stackTrace, sink) {
@@ -160,7 +160,7 @@ extension<T> on Stream<Either<Failure, T>> {
               exception.code == _FirestoreErrorCodes.permissionDenied) {
             sink.add(
               left(
-                const UnauthenticatedUserFailure(),
+                UnauthenticatedUserFailure(),
               ),
             );
           } else {

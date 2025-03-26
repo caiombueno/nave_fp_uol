@@ -10,6 +10,7 @@ import 'package:nave_fp_uol/src/data/data_sources/synced/models/writes/create_no
 import 'package:nave_fp_uol/src/data/data_sources/synced/models/note_sm.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/core/firestore_client.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/models/system_task_user_data_sm.dart';
+import 'package:nave_fp_uol/src/data/data_sources/synced/models/writes/create_user_task_sm.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/models/writes/update_user_task_description_sm.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/models/writes/update_user_task_title_sm.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/models/writes/update_note_sm.dart';
@@ -117,6 +118,27 @@ class SyncedDataSource {
     );
   }
 
+  Stream<Either<Failure, LessonSM>> watchLesson(
+    String lessonId,
+  ) {
+    return _firestoreClient.watchDocument(
+      collection: _Collections.lessons,
+      documentId: lessonId,
+      itemFromMap: LessonSMMapper.fromMap,
+    );
+  }
+
+  Stream<Either<Failure, LessonUserDataSM>> watchLessonUserData({
+    required String userId,
+    required String lessonId,
+  }) {
+    return _firestoreClient.watchDocument(
+      collection: _Collections.lessonUserData(userId),
+      documentId: lessonId,
+      itemFromMap: LessonUserDataSMMapper.fromMap,
+    );
+  }
+
   Stream<Either<Failure, List<LessonUserDataSM>>> watchLessonUserDataList(
     String userId,
   ) {
@@ -172,6 +194,23 @@ class SyncedDataSource {
               selectedSortKey: selectedSortKey,
             ).toMap(),
       replaceEntireDocument: false,
+    );
+  }
+
+  Future<void> createUserTask({
+    required String userId,
+    required String title,
+    required double selectedSortKey,
+    required TaskStatusSM status,
+  }) async {
+    await _firestoreClient.upsertDocument(
+      collection: _Collections.userTasks(userId),
+      data: CreateUserTaskSM(
+        title: title,
+        selectedSortKey: selectedSortKey,
+        status: status,
+      ).toMap(),
+      replaceEntireDocument: true,
     );
   }
 
@@ -296,9 +335,9 @@ abstract class _Collections {
   static String systemTasks = 'systemTasks';
   static String lessons = 'lessons';
   static String users = 'users';
-  static const String _systemTaskUserData = 'systemTaskUserData';
-  static const String _lessonUserData = 'lessonUserData';
-  static const String _userTasks = 'tasks';
+  static String _systemTaskUserData = 'systemTaskUserData';
+  static String _lessonUserData = 'lessonUserData';
+  static String _userTasks = 'tasks';
 
   static String userTasks(String userId) {
     return '$users/$userId/$_userTasks';

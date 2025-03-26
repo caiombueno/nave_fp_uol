@@ -16,11 +16,11 @@ sealed class Lesson with LessonMappable {
 @MappableClass(discriminatorValue: 'text')
 class TextLesson extends Lesson with TextLessonMappable {
   const TextLesson({
-    required super.id,
+    required String id,
     required this.title,
     required this.content,
-    required super.isCompleted,
-  });
+    required bool? isCompleted,
+  }) : super(id: id, isCompleted: isCompleted);
 
   final String? title;
   final String? content;
@@ -29,14 +29,17 @@ class TextLesson extends Lesson with TextLessonMappable {
 @MappableClass(discriminatorValue: 'video')
 class VideoLesson extends Lesson with VideoLessonMappable {
   const VideoLesson({
-    required super.id,
+    required String id,
     required this.title,
-    required this.url,
+    required this.filePath,
     required this.isHorizontal,
-    required super.isCompleted,
-  });
+    required bool? isCompleted,
+  }) : super(
+          id: id,
+          isCompleted: isCompleted,
+        );
 
   final String? title;
-  final String? url;
+  final String? filePath;
   final bool? isHorizontal;
 }

@@ -86,22 +86,14 @@ class TaskRepository {
             : Stream.value(
                 right(null),
               ),
-        Stream.value(
-          right(
-            List.generate(
-              5,
-              (index) {
-                return NoteSM(
-                  id: index.toString(),
-                  content:
-                      r'[{ "insert": "Agora é a hora de espalhar a notícia!\n", "attributes": { "bold": true } },{ "insert": "Com o Save The Date definido, nós vamos garantir que ele chegue direitinho para os convidados, de um jeito prático e sem estresse. Assim, todo mundo já marca a data na agenda e entra no clima do casamento com antecedência.\n" }   ]',
-                  lastUpdateDateTime: null,
-                  creationDateTime: null,
-                );
-              },
-            ),
-          ),
-        ),
+        userId != null
+            ? _syncedDataSource.watchSystemTaskNotes(
+                userId: userId,
+                taskId: taskId,
+              )
+            : Stream.value(
+                right([]),
+              ),
         _watchLessonList(),
         (systemTaskEither, taskUserDataEither, noteListEither,
             lessonListEither) {
@@ -204,6 +196,23 @@ class TaskRepository {
     });
   }
 
+  Future<Either<Failure, void>> createUserTask({
+    required String title,
+    required double selectedSortKey,
+    required TaskStatus status,
+  }) async {
+    return _doWithUser((userId) async {
+      await _syncedDataSource.createUserTask(
+        userId: userId,
+        title: title,
+        status: status.toSM(),
+        selectedSortKey: selectedSortKey,
+      );
+
+      return right(null);
+    });
+  }
+
   Future<Either<Failure, void>> createNote({
     required String taskId,
     required String content,
@@ -293,6 +302,32 @@ class TaskRepository {
     });
   }
 
+  Stream<Either<Failure, Lesson>> watchLesson(String lessonId) {
+    return _authDataSource.watchUserId().switchMap((userId) {
+      return Rx.combineLatest2<Either<Failure, LessonSM>,
+          Either<Failure, LessonUserDataSM?>, Either<Failure, Lesson>>(
+        _syncedDataSource.watchLesson(lessonId),
+        userId != null
+            ? _syncedDataSource.watchLessonUserData(
+                userId: userId,
+                lessonId: lessonId,
+              )
+            : Stream.value(
+                right(null),
+              ),
+        (lessonEither, lessonUserDataEither) {
+          return lessonEither.bind((lesson) {
+            return lessonUserDataEither.map((lessonUserData) {
+              return lesson.toDM(
+                lessonUserData,
+              );
+            });
+          });
+        },
+      );
+    });
+  }
+
   Future<Either<Failure, void>> _upsertNote({
     required String taskId,
     required String? noteId,
@@ -326,7 +361,7 @@ class TaskRepository {
     final userId = await _authDataSource.getUserId();
     if (userId == null) {
       return left(
-        const UnauthenticatedUserFailure(),
+        UnauthenticatedUserFailure(),
       );
     }
     return action(userId);
@@ -339,7 +374,7 @@ class TaskRepository {
       if (userId == null) {
         return Stream.value(
           left(
-            const UnauthenticatedUserFailure(),
+            UnauthenticatedUserFailure(),
           ),
         );
       }

@@ -31,23 +31,24 @@ extension on List<LessonSM> {
     List<LessonUserDataSM>? lessonsUserData,
   ) {
     return map(
-      (lessonSm) => lessonSm.toDM(
-        lessonsUserData,
-      ),
+      (lessonSm) {
+        final lessonUserData = lessonsUserData?.firstWhereOrNull(
+          (userData) => userData.lessonId == lessonSm.id,
+        );
+
+        return lessonSm.toDM(
+          lessonUserData,
+        );
+      },
     ).toList();
   }
 }
 
 extension on LessonSM {
   Lesson toDM(
-    List<LessonUserDataSM>? lessonsUserData,
+    LessonUserDataSM? lessonUserData,
   ) {
-    final isCompleted = lessonsUserData
-            ?.firstWhereOrNull(
-              (userData) => userData.lessonId == id,
-            )
-            ?.isCompleted ??
-        false;
+    final isCompleted = lessonUserData?.isCompleted ?? false;
 
     return switch (this) {
       TextLessonSM lesson => TextLesson(
@@ -59,7 +60,7 @@ extension on LessonSM {
       VideoLessonSM lesson => VideoLesson(
           id: lesson.id,
           title: lesson.title,
-          url: lesson.url,
+          filePath: lesson.filePath,
           isHorizontal: lesson.isHorizontal,
           isCompleted: isCompleted,
         ),
@@ -93,17 +94,19 @@ extension on SystemTaskSM {
       status: taskUserData?.status?.toDM() ?? TaskStatus.toDo,
       lastStatusUpdateDateTime: tzDateTime,
       lessons: lessons,
-      notes: notes
-          ?.sortedBy<num>(
-            (note) => ((note.creationDateTime ??
-                    note.lastUpdateDateTime ??
-                    TZDateTime.utc(0)) as TZDateTime)
-                .millisecondsSinceEpoch,
-          )
-          .map(
-            (note) => note.toDM(),
-          )
-          .toList(),
+      notes: notes == null
+          ? null
+          : notes
+              .sortedBy<num>(
+                (note) => (((note.creationDateTime ?? note.lastUpdateDateTime)
+                            ?.toUtcTZDateTime() ??
+                        TZDateTime.utc(0)))
+                    .millisecondsSinceEpoch,
+              )
+              .map(
+                (note) => note.toDM(),
+              )
+              .toList(),
     );
   }
 }
@@ -120,17 +123,19 @@ extension on UserTaskSM {
       descriptionContent: descriptionContent,
       status: status?.toDM() ?? TaskStatus.toDo,
       lastStatusUpdateDateTime: tzDateTime,
-      notes: notes
-          ?.sortedBy<num>(
-            (note) => ((note.creationDateTime ??
-                    note.lastUpdateDateTime ??
-                    TZDateTime.utc(0)) as TZDateTime)
-                .millisecondsSinceEpoch,
-          )
-          .map(
-            (note) => note.toDM(),
-          )
-          .toList(),
+      notes: notes == null
+          ? null
+          : notes
+              .sortedBy<num>(
+                (note) => ((note.creationDateTime ??
+                        note.lastUpdateDateTime ??
+                        TZDateTime.utc(0)) as TZDateTime)
+                    .millisecondsSinceEpoch,
+              )
+              .map(
+                (note) => note.toDM(),
+              )
+              .toList(),
     );
   }
 }

@@ -206,8 +206,9 @@ class VideoLessonSMMapper extends SubClassMapperBase<VideoLessonSM> {
   static const Field<VideoLessonSM, String> _f$id = Field('id', _$id);
   static String? _$title(VideoLessonSM v) => v.title;
   static const Field<VideoLessonSM, String> _f$title = Field('title', _$title);
-  static String? _$url(VideoLessonSM v) => v.url;
-  static const Field<VideoLessonSM, String> _f$url = Field('url', _$url);
+  static String? _$filePath(VideoLessonSM v) => v.filePath;
+  static const Field<VideoLessonSM, String> _f$filePath =
+      Field('filePath', _$filePath);
   static bool? _$isHorizontal(VideoLessonSM v) => v.isHorizontal;
   static const Field<VideoLessonSM, bool> _f$isHorizontal =
       Field('isHorizontal', _$isHorizontal);
@@ -216,7 +217,7 @@ class VideoLessonSMMapper extends SubClassMapperBase<VideoLessonSM> {
   final MappableFields<VideoLessonSM> fields = const {
     #id: _f$id,
     #title: _f$title,
-    #url: _f$url,
+    #filePath: _f$filePath,
     #isHorizontal: _f$isHorizontal,
   };
 
@@ -231,7 +232,7 @@ class VideoLessonSMMapper extends SubClassMapperBase<VideoLessonSM> {
     return VideoLessonSM(
         id: data.dec(_f$id),
         title: data.dec(_f$title),
-        url: data.dec(_f$url),
+        filePath: data.dec(_f$filePath),
         isHorizontal: data.dec(_f$isHorizontal));
   }
 
@@ -289,7 +290,7 @@ extension VideoLessonSMValueCopy<$R, $Out>
 abstract class VideoLessonSMCopyWith<$R, $In extends VideoLessonSM, $Out>
     implements LessonSMCopyWith<$R, $In, $Out> {
   @override
-  $R call({String? id, String? title, String? url, bool? isHorizontal});
+  $R call({String? id, String? title, String? filePath, bool? isHorizontal});
   VideoLessonSMCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -305,19 +306,19 @@ class _VideoLessonSMCopyWithImpl<$R, $Out>
   $R call(
           {String? id,
           Object? title = $none,
-          Object? url = $none,
+          Object? filePath = $none,
           Object? isHorizontal = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (title != $none) #title: title,
-        if (url != $none) #url: url,
+        if (filePath != $none) #filePath: filePath,
         if (isHorizontal != $none) #isHorizontal: isHorizontal
       }));
   @override
   VideoLessonSM $make(CopyWithData data) => VideoLessonSM(
       id: data.get(#id, or: $value.id),
       title: data.get(#title, or: $value.title),
-      url: data.get(#url, or: $value.url),
+      filePath: data.get(#filePath, or: $value.filePath),
       isHorizontal: data.get(#isHorizontal, or: $value.isHorizontal));
 
   @override

@@ -14,10 +14,10 @@ sealed class LessonSM with LessonSMMappable {
 @MappableClass(discriminatorValue: 'text')
 class TextLessonSM extends LessonSM with TextLessonSMMappable {
   const TextLessonSM({
-    required super.id,
+    required String id,
     required this.title,
     required this.content,
-  });
+  }): super(id: id);
 
   final String? title;
   final String? content;
@@ -26,13 +26,13 @@ class TextLessonSM extends LessonSM with TextLessonSMMappable {
 @MappableClass(discriminatorValue: 'video')
 class VideoLessonSM extends LessonSM with VideoLessonSMMappable {
   const VideoLessonSM({
-    required super.id,
+    required String id,
     required this.title,
-    required this.url,
+    required this.filePath,
     required this.isHorizontal,
-  });
+  }): super(id: id);
 
   final String? title;
-  final String? url;
+  final String? filePath;
   final bool? isHorizontal;
 }

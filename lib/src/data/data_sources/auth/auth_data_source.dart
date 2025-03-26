@@ -26,12 +26,11 @@ class AuthDataSource {
         final errorCode = error.code;
         final failure = switch (errorCode) {
           _FirebaseAuthErrorCodes.invalidCredentials =>
-            const InvalidCredentialsFailure(),
-          _FirebaseAuthErrorCodes.disabledUser => const DisabledUserFailure(),
+            InvalidCredentialsFailure(),
+          _FirebaseAuthErrorCodes.disabledUser => DisabledUserFailure(),
           _FirebaseAuthErrorCodes.tooManyRequests =>
-            const TooManySignInAttemptsFailure(),
-          _FirebaseAuthErrorCodes.networkRequestFailed =>
-            const NoInternetFailure(),
+            TooManySignInAttemptsFailure(),
+          _FirebaseAuthErrorCodes.networkRequestFailed => NoInternetFailure(),
           _ => UnknownFailure(
               underlyingException: error,
               underlyingStackTrace: stackTrace,
@@ -66,8 +65,7 @@ class AuthDataSource {
       if (error is FirebaseAuthException) {
         final errorCode = error.code;
         final failure = switch (errorCode) {
-          _FirebaseAuthErrorCodes.networkRequestFailed =>
-            const NoInternetFailure(),
+          _FirebaseAuthErrorCodes.networkRequestFailed => NoInternetFailure(),
           _ => UnknownFailure(
               underlyingException: error,
               underlyingStackTrace: stackTrace,
