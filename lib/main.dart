@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:nave_fp_uol/env/env.dart';
 import 'package:nave_fp_uol/firebase_options.dart';
+import 'package:nave_fp_uol/service_locator.dart';
 import 'package:nave_fp_uol/src/data/data_sources/synced/core/field_value_mapper.dart';
-import 'package:nave_fp_uol/src/service_locator.dart';
+
 import 'package:nave_fp_uol/src/services/analytics/analytics_client.dart';
 import 'package:nave_fp_uol/src/services/analytics/core/analytics_navigator_observer.dart';
 import 'package:nave_fp_uol/src/ui/features/router.dart';
@@ -29,11 +30,11 @@ void main() async {
 
   await _initSentry();
 
-  runApp(const MyApp()
-      // SentryWidget(
-      //   child: const MainApp(),
-      // ),
-      );
+  runApp(
+    SentryWidget(
+      child: const MyApp(),
+    ),
+  );
 }
 
 void _initDartMappable() {
