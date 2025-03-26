@@ -21,14 +21,19 @@ sealed class TaskSummary with TaskSummaryMappable {
 @MappableClass()
 class SystemTaskSummary extends TaskSummary with SystemTaskSummaryMappable {
   const SystemTaskSummary({
-    required super.id,
-    required super.title,
-    required super.status,
-    required super.selectedSortKey,
+    required String id,
+    required String? title,
+    required TaskStatus status,
+    required double? selectedSortKey,
     required this.isFree,
     required this.blockingTaskIds,
     required this.defaultSortKey,
-  });
+  }) : super(
+          id: id,
+          title: title,
+          status: status,
+          selectedSortKey: selectedSortKey,
+        );
 
   final bool? isFree;
   final List<String>? blockingTaskIds;
@@ -38,9 +43,14 @@ class SystemTaskSummary extends TaskSummary with SystemTaskSummaryMappable {
 @MappableClass()
 class UserTaskSummary extends TaskSummary with UserTaskSummaryMappable {
   const UserTaskSummary({
-    required super.id,
-    required super.title,
-    required super.status,
-    required super.selectedSortKey,
-  });
+    required String id,
+    required String? title,
+    required TaskStatus status,
+    required double? selectedSortKey,
+  }) : super(
+          id: id,
+          title: title,
+          status: status,
+          selectedSortKey: selectedSortKey,
+        );
 }

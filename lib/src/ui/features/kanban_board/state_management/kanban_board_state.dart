@@ -15,8 +15,9 @@ class KanbanBoardLoading extends KanbanBoardState
 }
 
 @MappableClass()
-class KanbanBoardError extends KanbanBoardState with KanbanBoardErrorMappable {
-  const KanbanBoardError();
+class KanbanBoardFailed extends KanbanBoardState
+    with KanbanBoardFailedMappable {
+  const KanbanBoardFailed();
 }
 
 @MappableClass()
@@ -27,6 +28,7 @@ class KanbanBoardLoaded extends KanbanBoardState
     required this.inProgressTaskSummaryList,
     required this.doneTaskSummaryList,
     this.updateTaskPlacementFailure = null,
+    this.createUserTaskFailure = null,
   });
 
   final List<TaskSummaryVM> toDoTaskSummaryList;
@@ -34,6 +36,7 @@ class KanbanBoardLoaded extends KanbanBoardState
   final List<TaskSummaryVM> doneTaskSummaryList;
 
   final Failure? updateTaskPlacementFailure;
+  final Failure? createUserTaskFailure;
 }
 
 enum TaskAccessStatus { lockedByPayment, lockedByDependency, unlocked }

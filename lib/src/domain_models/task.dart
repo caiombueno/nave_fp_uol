@@ -28,16 +28,23 @@ sealed class Task with TaskMappable {
 @MappableClass()
 class SystemTask extends Task with SystemTaskMappable {
   const SystemTask({
-    required super.id,
-    required super.title,
-    required super.descriptionContent,
-    required super.status,
-    required super.lastStatusUpdateDateTime,
-    required super.notes,
+    required String? id,
+    required String? title,
+    required String? descriptionContent,
+    required TaskStatus status,
+    required TZDateTime? lastStatusUpdateDateTime,
+    required List<Note>? notes,
     required this.isFree,
     required this.blockingTaskIds,
     required this.lessons,
-  });
+  }) : super(
+          id: id,
+          title: title,
+          descriptionContent: descriptionContent,
+          status: status,
+          lastStatusUpdateDateTime: lastStatusUpdateDateTime,
+          notes: notes,
+        );
 
   final bool? isFree;
   final List<String>? blockingTaskIds;
@@ -47,11 +54,18 @@ class SystemTask extends Task with SystemTaskMappable {
 @MappableClass()
 class UserTask extends Task with UserTaskMappable {
   const UserTask({
-    required super.id,
-    required super.title,
-    required super.descriptionContent,
-    required super.status,
-    required super.lastStatusUpdateDateTime,
-    required super.notes,
-  });
+    required String? id,
+    required String? title,
+    required String? descriptionContent,
+    required TaskStatus status,
+    required TZDateTime? lastStatusUpdateDateTime,
+    required List<Note>? notes,
+  }) : super(
+          id: id,
+          title: title,
+          descriptionContent: descriptionContent,
+          status: status,
+          lastStatusUpdateDateTime: lastStatusUpdateDateTime,
+          notes: notes,
+        );
 }

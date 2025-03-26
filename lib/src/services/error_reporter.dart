@@ -7,6 +7,13 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 class ErrorReporter {
   const ErrorReporter();
 
+  @visibleForTesting
+  Future<void> captureException(
+    Object exception, {
+    StackTrace? stackTrace,
+  }) async =>
+      Sentry.captureException(exception, stackTrace: stackTrace);
+
   Future<void> reportFailure(Failure failure) async {
     if (failure is UnknownFailure) {
       await reportException(
@@ -20,7 +27,7 @@ class ErrorReporter {
     Object exception,
     StackTrace? stackTrace,
   ) async {
-    await Sentry.captureException(
+    await captureException(
       exception,
       stackTrace: stackTrace,
     );

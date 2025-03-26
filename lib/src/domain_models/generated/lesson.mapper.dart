@@ -220,8 +220,9 @@ class VideoLessonMapper extends SubClassMapperBase<VideoLesson> {
   static const Field<VideoLesson, String> _f$id = Field('id', _$id);
   static String? _$title(VideoLesson v) => v.title;
   static const Field<VideoLesson, String> _f$title = Field('title', _$title);
-  static String? _$url(VideoLesson v) => v.url;
-  static const Field<VideoLesson, String> _f$url = Field('url', _$url);
+  static String? _$filePath(VideoLesson v) => v.filePath;
+  static const Field<VideoLesson, String> _f$filePath =
+      Field('filePath', _$filePath);
   static bool? _$isHorizontal(VideoLesson v) => v.isHorizontal;
   static const Field<VideoLesson, bool> _f$isHorizontal =
       Field('isHorizontal', _$isHorizontal);
@@ -233,7 +234,7 @@ class VideoLessonMapper extends SubClassMapperBase<VideoLesson> {
   final MappableFields<VideoLesson> fields = const {
     #id: _f$id,
     #title: _f$title,
-    #url: _f$url,
+    #filePath: _f$filePath,
     #isHorizontal: _f$isHorizontal,
     #isCompleted: _f$isCompleted,
   };
@@ -249,7 +250,7 @@ class VideoLessonMapper extends SubClassMapperBase<VideoLesson> {
     return VideoLesson(
         id: data.dec(_f$id),
         title: data.dec(_f$title),
-        url: data.dec(_f$url),
+        filePath: data.dec(_f$filePath),
         isHorizontal: data.dec(_f$isHorizontal),
         isCompleted: data.dec(_f$isCompleted));
   }
@@ -309,7 +310,7 @@ abstract class VideoLessonCopyWith<$R, $In extends VideoLesson, $Out>
   $R call(
       {String? id,
       String? title,
-      String? url,
+      String? filePath,
       bool? isHorizontal,
       bool? isCompleted});
   VideoLessonCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
@@ -327,13 +328,13 @@ class _VideoLessonCopyWithImpl<$R, $Out>
   $R call(
           {String? id,
           Object? title = $none,
-          Object? url = $none,
+          Object? filePath = $none,
           Object? isHorizontal = $none,
           Object? isCompleted = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (title != $none) #title: title,
-        if (url != $none) #url: url,
+        if (filePath != $none) #filePath: filePath,
         if (isHorizontal != $none) #isHorizontal: isHorizontal,
         if (isCompleted != $none) #isCompleted: isCompleted
       }));
@@ -341,7 +342,7 @@ class _VideoLessonCopyWithImpl<$R, $Out>
   VideoLesson $make(CopyWithData data) => VideoLesson(
       id: data.get(#id, or: $value.id),
       title: data.get(#title, or: $value.title),
-      url: data.get(#url, or: $value.url),
+      filePath: data.get(#filePath, or: $value.filePath),
       isHorizontal: data.get(#isHorizontal, or: $value.isHorizontal),
       isCompleted: data.get(#isCompleted, or: $value.isCompleted));
 

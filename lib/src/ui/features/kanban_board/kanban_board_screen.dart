@@ -8,6 +8,7 @@ import 'package:nave_fp_uol/src/ui/features/kanban_board/state_management/kanban
 import 'package:nave_fp_uol/src/ui/features/kanban_board/widgets/kanban_board/kanban_board.dart';
 import 'package:nave_fp_uol/src/ui/features/router.gr.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_text_styles.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_alert_dialog.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_progress_indicator.dart';
 import 'package:nave_fp_uol/src/utils/extensions/build_context_extensions.dart';
@@ -34,21 +35,38 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
       body: SafeArea(
         child: BlocConsumer<KanbanBoardCubit, KanbanBoardState>(
           listener: (context, state) {
-            if (state is KanbanBoardLoaded &&
-                state.updateTaskPlacementFailure
-                    is UnauthenticatedUserFailure) {
-              _showSignInPromptForTaskMove(context);
+            if (state is KanbanBoardLoaded) {
+              if (state.updateTaskPlacementFailure
+                  is UnauthenticatedUserFailure) {
+                final l10n = context.l10n;
+                _showSignInPrompt(
+                  context,
+                  message: l10n.kanbanBoardSignInPromptForTaskMoveDialogMessage,
+                );
 
-              final cubit = context.read<KanbanBoardCubit>();
-              // This is needed to reset the updateTaskStatusFailure property and
-              // guarantee if another state is emitted we won't be opening the
-              // Sign In screen again.
-              cubit.resetTaskStatusFailure();
+                final cubit = context.read<KanbanBoardCubit>();
+                // This is needed to reset the updateTaskStatusFailure property and
+                // guarantee if another state is emitted we won't be opening the
+                // Sign In screen again.
+                cubit.resetTaskStatusFailure();
+              } else if (state.createUserTaskFailure
+                  is UnauthenticatedUserFailure) {
+                _showSignInPrompt(
+                  context,
+                  message:
+                      l10n.kanbanBoardSignInPromptForTaskCreationDialogMessage,
+                );
+
+                final cubit = context.read<KanbanBoardCubit>();
+                cubit.resetTaskCreationFailure();
+              }
             }
           },
           builder: (context, state) {
             return switch (state) {
-              KanbanBoardLoading _ => KnotProgressIndicator(),
+              KanbanBoardLoading _ => KnotProgressIndicator(
+                  color: KnotSemanticColors.kanbanBoardScreenProgressIndicator,
+                ),
               KanbanBoardLoaded state => KanbanBoard(
                   toDoTaskSummaryList: state.toDoTaskSummaryList,
                   inProgressTaskSummaryList: state.inProgressTaskSummaryList,
@@ -59,10 +77,10 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
                   layoutMode: kIsWeb
                       ? KanbanLayoutMode.continuous
                       : KanbanLayoutMode.pageView,
-                  onTaskMove: (taskId, targetStatus, targetIndex) {
+                  onTaskMove: (taskId, targetStatus, targetIndex) async {
                     if (taskId == null) return;
                     final cubit = context.read<KanbanBoardCubit>();
-                    cubit.updateTaskPlacement(
+                    await cubit.updateTaskPlacement(
                       taskId: taskId,
                       status: targetStatus,
                       index: targetIndex,
@@ -72,12 +90,21 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
                     if (taskId == null) return;
                     context.router.push(TaskDetailsRoute(taskId: taskId));
                   },
-                  onCreateTask: (targetStatus, title) {
-                    // TODO: create user task
+                  onCreateTask: (status, title) async {
+                    final cubit = context.read<KanbanBoardCubit>();
+                    await cubit.createUserTask(
+                      title: title,
+                      status: status,
+                    );
                   },
                 ),
-              // TODO: create error state view
-              _ => SizedBox.shrink(),
+              _ => Center(
+                  child: Text(
+                    l10n.kanbanBoardScreenFailedMessage,
+                    style: KnotSemanticTextStyles.kanbanBoardScreenErrorMessage,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
             };
           },
         ),
@@ -85,9 +112,10 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Future<void> _showSignInPromptForTaskMove(
-    BuildContext context,
-  ) async {
+  Future<void> _showSignInPrompt(
+    BuildContext context, {
+    required String message,
+  }) async {
     final l10n = context.l10n;
 
     await showDialog<void>(
@@ -95,9 +123,9 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
       barrierDismissible: false,
       builder: (context) => KnotAlertDialog(
         context: context,
-        title: l10n.signInPromptForTaskMoveTitle,
-        message: l10n.signInPromptForTaskMoveMessage,
-        ctaLabel: l10n.signInPromptForTaskMoveCta,
+        title: l10n.kanbanBoardSignInPromptDialogTitle,
+        message: message,
+        ctaLabel: l10n.kanbanBoardSignInPromptDialogCta,
         onCtaPressed: () {
           // This `maybePop()` is imperative, otherwise the user is closed in a
           // loop since he can't dismiss the dialog by tapping outside.

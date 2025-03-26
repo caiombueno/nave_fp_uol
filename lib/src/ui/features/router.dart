@@ -15,8 +15,17 @@ class AppRouter extends RootStackRouter {
           page: TaskDetailsRoute.page,
         ),
         AutoRoute(
+          path: '/tasks/:taskId/video-lesson/:lessonId',
+          page: VideoLessonRoute.page,
+        ),
+        AutoRoute(
+          path: '/tasks/:taskId/text-lesson/:lessonId',
+          page: TextLessonRoute.page,
+        ),
+        AutoRoute(
           page: SignInRoute.page,
           fullscreenDialog: true,
+          initial: false,
         ),
       ];
 }

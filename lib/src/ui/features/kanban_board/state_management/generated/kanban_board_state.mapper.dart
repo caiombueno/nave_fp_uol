@@ -14,7 +14,7 @@ class KanbanBoardStateMapper extends ClassMapperBase<KanbanBoardState> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = KanbanBoardStateMapper._());
       KanbanBoardLoadingMapper.ensureInitialized();
-      KanbanBoardErrorMapper.ensureInitialized();
+      KanbanBoardFailedMapper.ensureInitialized();
       KanbanBoardLoadedMapper.ensureInitialized();
     }
     return _instance!;
@@ -167,113 +167,114 @@ class _KanbanBoardLoadingCopyWithImpl<$R, $Out>
       _KanbanBoardLoadingCopyWithImpl($value, $cast, t);
 }
 
-class KanbanBoardErrorMapper extends SubClassMapperBase<KanbanBoardError> {
-  KanbanBoardErrorMapper._();
+class KanbanBoardFailedMapper extends SubClassMapperBase<KanbanBoardFailed> {
+  KanbanBoardFailedMapper._();
 
-  static KanbanBoardErrorMapper? _instance;
-  static KanbanBoardErrorMapper ensureInitialized() {
+  static KanbanBoardFailedMapper? _instance;
+  static KanbanBoardFailedMapper ensureInitialized() {
     if (_instance == null) {
-      MapperContainer.globals.use(_instance = KanbanBoardErrorMapper._());
+      MapperContainer.globals.use(_instance = KanbanBoardFailedMapper._());
       KanbanBoardStateMapper.ensureInitialized().addSubMapper(_instance!);
     }
     return _instance!;
   }
 
   @override
-  final String id = 'KanbanBoardError';
+  final String id = 'KanbanBoardFailed';
 
   @override
-  final MappableFields<KanbanBoardError> fields = const {};
+  final MappableFields<KanbanBoardFailed> fields = const {};
 
   @override
   final String discriminatorKey = 'type';
   @override
-  final dynamic discriminatorValue = 'KanbanBoardError';
+  final dynamic discriminatorValue = 'KanbanBoardFailed';
   @override
   late final ClassMapperBase superMapper =
       KanbanBoardStateMapper.ensureInitialized();
 
-  static KanbanBoardError _instantiate(DecodingData data) {
-    return KanbanBoardError();
+  static KanbanBoardFailed _instantiate(DecodingData data) {
+    return KanbanBoardFailed();
   }
 
   @override
   final Function instantiate = _instantiate;
 
-  static KanbanBoardError fromMap(Map<String, dynamic> map) {
-    return ensureInitialized().decodeMap<KanbanBoardError>(map);
+  static KanbanBoardFailed fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<KanbanBoardFailed>(map);
   }
 
-  static KanbanBoardError fromJson(String json) {
-    return ensureInitialized().decodeJson<KanbanBoardError>(json);
+  static KanbanBoardFailed fromJson(String json) {
+    return ensureInitialized().decodeJson<KanbanBoardFailed>(json);
   }
 }
 
-mixin KanbanBoardErrorMappable {
+mixin KanbanBoardFailedMappable {
   String toJson() {
-    return KanbanBoardErrorMapper.ensureInitialized()
-        .encodeJson<KanbanBoardError>(this as KanbanBoardError);
+    return KanbanBoardFailedMapper.ensureInitialized()
+        .encodeJson<KanbanBoardFailed>(this as KanbanBoardFailed);
   }
 
   Map<String, dynamic> toMap() {
-    return KanbanBoardErrorMapper.ensureInitialized()
-        .encodeMap<KanbanBoardError>(this as KanbanBoardError);
+    return KanbanBoardFailedMapper.ensureInitialized()
+        .encodeMap<KanbanBoardFailed>(this as KanbanBoardFailed);
   }
 
-  KanbanBoardErrorCopyWith<KanbanBoardError, KanbanBoardError, KanbanBoardError>
-      get copyWith => _KanbanBoardErrorCopyWithImpl(
-          this as KanbanBoardError, $identity, $identity);
+  KanbanBoardFailedCopyWith<KanbanBoardFailed, KanbanBoardFailed,
+          KanbanBoardFailed>
+      get copyWith => _KanbanBoardFailedCopyWithImpl(
+          this as KanbanBoardFailed, $identity, $identity);
   @override
   String toString() {
-    return KanbanBoardErrorMapper.ensureInitialized()
-        .stringifyValue(this as KanbanBoardError);
+    return KanbanBoardFailedMapper.ensureInitialized()
+        .stringifyValue(this as KanbanBoardFailed);
   }
 
   @override
   bool operator ==(Object other) {
-    return KanbanBoardErrorMapper.ensureInitialized()
-        .equalsValue(this as KanbanBoardError, other);
+    return KanbanBoardFailedMapper.ensureInitialized()
+        .equalsValue(this as KanbanBoardFailed, other);
   }
 
   @override
   int get hashCode {
-    return KanbanBoardErrorMapper.ensureInitialized()
-        .hashValue(this as KanbanBoardError);
+    return KanbanBoardFailedMapper.ensureInitialized()
+        .hashValue(this as KanbanBoardFailed);
   }
 }
 
-extension KanbanBoardErrorValueCopy<$R, $Out>
-    on ObjectCopyWith<$R, KanbanBoardError, $Out> {
-  KanbanBoardErrorCopyWith<$R, KanbanBoardError, $Out>
-      get $asKanbanBoardError =>
-          $base.as((v, t, t2) => _KanbanBoardErrorCopyWithImpl(v, t, t2));
+extension KanbanBoardFailedValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, KanbanBoardFailed, $Out> {
+  KanbanBoardFailedCopyWith<$R, KanbanBoardFailed, $Out>
+      get $asKanbanBoardFailed =>
+          $base.as((v, t, t2) => _KanbanBoardFailedCopyWithImpl(v, t, t2));
 }
 
-abstract class KanbanBoardErrorCopyWith<$R, $In extends KanbanBoardError, $Out>
-    implements KanbanBoardStateCopyWith<$R, $In, $Out> {
+abstract class KanbanBoardFailedCopyWith<$R, $In extends KanbanBoardFailed,
+    $Out> implements KanbanBoardStateCopyWith<$R, $In, $Out> {
   @override
   $R call();
-  KanbanBoardErrorCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+  KanbanBoardFailedCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }
 
-class _KanbanBoardErrorCopyWithImpl<$R, $Out>
-    extends ClassCopyWithBase<$R, KanbanBoardError, $Out>
-    implements KanbanBoardErrorCopyWith<$R, KanbanBoardError, $Out> {
-  _KanbanBoardErrorCopyWithImpl(super.value, super.then, super.then2);
+class _KanbanBoardFailedCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, KanbanBoardFailed, $Out>
+    implements KanbanBoardFailedCopyWith<$R, KanbanBoardFailed, $Out> {
+  _KanbanBoardFailedCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<KanbanBoardError> $mapper =
-      KanbanBoardErrorMapper.ensureInitialized();
+  late final ClassMapperBase<KanbanBoardFailed> $mapper =
+      KanbanBoardFailedMapper.ensureInitialized();
   @override
   $R call() => $apply(FieldCopyWithData({}));
   @override
-  KanbanBoardError $make(CopyWithData data) => KanbanBoardError();
+  KanbanBoardFailed $make(CopyWithData data) => KanbanBoardFailed();
 
   @override
-  KanbanBoardErrorCopyWith<$R2, KanbanBoardError, $Out2> $chain<$R2, $Out2>(
+  KanbanBoardFailedCopyWith<$R2, KanbanBoardFailed, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
-      _KanbanBoardErrorCopyWithImpl($value, $cast, t);
+      _KanbanBoardFailedCopyWithImpl($value, $cast, t);
 }
 
 class KanbanBoardLoadedMapper extends SubClassMapperBase<KanbanBoardLoaded> {
@@ -313,6 +314,10 @@ class KanbanBoardLoadedMapper extends SubClassMapperBase<KanbanBoardLoaded> {
   static const Field<KanbanBoardLoaded, Failure> _f$updateTaskPlacementFailure =
       Field('updateTaskPlacementFailure', _$updateTaskPlacementFailure,
           opt: true);
+  static Failure? _$createUserTaskFailure(KanbanBoardLoaded v) =>
+      v.createUserTaskFailure;
+  static const Field<KanbanBoardLoaded, Failure> _f$createUserTaskFailure =
+      Field('createUserTaskFailure', _$createUserTaskFailure, opt: true);
 
   @override
   final MappableFields<KanbanBoardLoaded> fields = const {
@@ -320,6 +325,7 @@ class KanbanBoardLoadedMapper extends SubClassMapperBase<KanbanBoardLoaded> {
     #inProgressTaskSummaryList: _f$inProgressTaskSummaryList,
     #doneTaskSummaryList: _f$doneTaskSummaryList,
     #updateTaskPlacementFailure: _f$updateTaskPlacementFailure,
+    #createUserTaskFailure: _f$createUserTaskFailure,
   };
 
   @override
@@ -335,7 +341,8 @@ class KanbanBoardLoadedMapper extends SubClassMapperBase<KanbanBoardLoaded> {
         toDoTaskSummaryList: data.dec(_f$toDoTaskSummaryList),
         inProgressTaskSummaryList: data.dec(_f$inProgressTaskSummaryList),
         doneTaskSummaryList: data.dec(_f$doneTaskSummaryList),
-        updateTaskPlacementFailure: data.dec(_f$updateTaskPlacementFailure));
+        updateTaskPlacementFailure: data.dec(_f$updateTaskPlacementFailure),
+        createUserTaskFailure: data.dec(_f$createUserTaskFailure));
   }
 
   @override
@@ -407,7 +414,8 @@ abstract class KanbanBoardLoadedCopyWith<$R, $In extends KanbanBoardLoaded,
       {List<TaskSummaryVM>? toDoTaskSummaryList,
       List<TaskSummaryVM>? inProgressTaskSummaryList,
       List<TaskSummaryVM>? doneTaskSummaryList,
-      Failure? updateTaskPlacementFailure});
+      Failure? updateTaskPlacementFailure,
+      Failure? createUserTaskFailure});
   KanbanBoardLoadedCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }
@@ -442,7 +450,8 @@ class _KanbanBoardLoadedCopyWithImpl<$R, $Out>
           {List<TaskSummaryVM>? toDoTaskSummaryList,
           List<TaskSummaryVM>? inProgressTaskSummaryList,
           List<TaskSummaryVM>? doneTaskSummaryList,
-          Object? updateTaskPlacementFailure = $none}) =>
+          Object? updateTaskPlacementFailure = $none,
+          Object? createUserTaskFailure = $none}) =>
       $apply(FieldCopyWithData({
         if (toDoTaskSummaryList != null)
           #toDoTaskSummaryList: toDoTaskSummaryList,
@@ -451,7 +460,9 @@ class _KanbanBoardLoadedCopyWithImpl<$R, $Out>
         if (doneTaskSummaryList != null)
           #doneTaskSummaryList: doneTaskSummaryList,
         if (updateTaskPlacementFailure != $none)
-          #updateTaskPlacementFailure: updateTaskPlacementFailure
+          #updateTaskPlacementFailure: updateTaskPlacementFailure,
+        if (createUserTaskFailure != $none)
+          #createUserTaskFailure: createUserTaskFailure
       }));
   @override
   KanbanBoardLoaded $make(CopyWithData data) => KanbanBoardLoaded(
@@ -462,7 +473,9 @@ class _KanbanBoardLoadedCopyWithImpl<$R, $Out>
       doneTaskSummaryList:
           data.get(#doneTaskSummaryList, or: $value.doneTaskSummaryList),
       updateTaskPlacementFailure: data.get(#updateTaskPlacementFailure,
-          or: $value.updateTaskPlacementFailure));
+          or: $value.updateTaskPlacementFailure),
+      createUserTaskFailure:
+          data.get(#createUserTaskFailure, or: $value.createUserTaskFailure));
 
   @override
   KanbanBoardLoadedCopyWith<$R2, KanbanBoardLoaded, $Out2> $chain<$R2, $Out2>(

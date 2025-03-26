@@ -24,9 +24,12 @@ part of 'kanban_board_cubit.dart';
 /// Os valores são propositalmente altos (`500.000`, `10.000.000`) para reduzir a chance de
 /// colisões e evitar problemas ao inserir tarefas em posições intermediárias.
 
-const double _sortKeyIncrement = 500000.0; // Incremento usado para criar espaço entre tasks ao mover
-const double _userTaskBaseSortKey = 10000000.0; // Base alta para UserTasks, garantindo que fiquem abaixo das SystemTasks inicialmente
-const double _userTaskIncrement = 1000.0; // Incremento usado para ordenar UserTasks antes de serem movidas
+const double _sortKeyIncrement =
+    500000.0; // Incremento usado para criar espaço entre tasks ao mover
+const double _userTaskBaseSortKey =
+    10000000.0; // Base alta para UserTasks, garantindo que fiquem abaixo das SystemTasks inicialmente
+const double _userTaskIncrement =
+    1000.0; // Incremento usado para ordenar UserTasks antes de serem movidas
 
 /// Ordena a lista de tasks com base nos valores usados para definir sua posição.
 extension on List<TaskSummaryVM> {
@@ -44,11 +47,15 @@ extension on List<TaskSummaryVM> {
 ///
 /// Isso evita a necessidade de reindexação completa e mantém a ordenação estável.
 extension on List<TaskSummaryVM> {
-  double computeSelectedSortKey(int newIndex, String movedTaskId) {
+  double computeSelectedSortKey(int newIndex, String? movedTaskId) {
     if (isEmpty) return _sortKeyIncrement;
 
     // Remove a task que está sendo movida para evitar interferências no cálculo
-    final adjustedList = where((task) => task.id != movedTaskId).toList();
+    final adjustedList = movedTaskId == null
+        ? this
+        : where(
+            (task) => task.id != movedTaskId,
+          ).toList();
 
     if (adjustedList.isEmpty) return _sortKeyIncrement;
 
@@ -118,7 +125,7 @@ extension on List<TaskSummary> {
       if (task is SystemTaskSummary) {
         final blockingTaskTitles = task.blockingTaskIds
             ?.map((taskId) =>
-        systemTaskList.firstWhereOrNull((t) => t.id == taskId)?.title)
+                systemTaskList.firstWhereOrNull((t) => t.id == taskId)?.title)
             .whereType<String>()
             .toList();
 
@@ -129,7 +136,8 @@ extension on List<TaskSummary> {
           blockingTaskTitles: blockingTaskTitles,
           selectedSortKey: task.selectedSortKey,
           defaultSortKey: task.defaultSortKey,
-          index: index, // Usado como fallback caso `defaultSortKey` esteja ausente
+          index:
+              index, // Usado como fallback caso `defaultSortKey` esteja ausente
         );
       }
 
@@ -137,7 +145,8 @@ extension on List<TaskSummary> {
         id: task.id,
         title: task.title,
         selectedSortKey: task.selectedSortKey,
-        index: index, // Garante que UserTasks tenham um valor inicial previsível antes de serem movidas
+        index:
+            index, // Garante que UserTasks tenham um valor inicial previsível antes de serem movidas
       );
     }).toList();
   }

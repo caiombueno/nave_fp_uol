@@ -73,7 +73,8 @@ class _KanbanColumnCardListState extends State<KanbanColumnCardList>
   void dispose() {
     _scrollController.dispose();
     _autoScrollTimer?.cancel();
-    _autoScrollTicker?.dispose();
+    _autoScrollTicker?.stop();
+    if (!(_autoScrollTicker?.isActive ?? false)) _autoScrollTicker?.dispose();
 
     super.dispose();
   }
@@ -88,11 +89,18 @@ class _KanbanColumnCardListState extends State<KanbanColumnCardList>
   }) {
     if (_autoScrollTicker != null) return;
 
-    final ticker = createTicker(
-      (_) => _triggerAutoScroll(
-        autoScrollDirection: autoScrollDirection,
-      ),
-    );
+    Ticker? ticker;
+    try {
+      ticker = createTicker(
+        (_) => _triggerAutoScroll(
+          autoScrollDirection: autoScrollDirection,
+        ),
+      );
+    } catch (_) {
+      ticker = null;
+    }
+
+    if (ticker == null) return;
 
     _autoScrollTicker = ticker;
 
@@ -102,10 +110,6 @@ class _KanbanColumnCardListState extends State<KanbanColumnCardList>
   /// Stops and disposes the ticker.
   void _stopAutoScrollTicker() {
     _autoScrollTicker?.stop();
-
-    _autoScrollTicker?.dispose();
-
-    _autoScrollTicker = null;
   }
 
   /// Triggers auto scroll if the scroll direction is set and no animation is in progress.

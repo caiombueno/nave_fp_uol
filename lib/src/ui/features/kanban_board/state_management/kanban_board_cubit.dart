@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nave_fp_uol/src/service_locator.dart';
+import 'package:nave_fp_uol/service_locator.dart';
 import 'package:nave_fp_uol/src/data/repositories/task/task_repository.dart';
 import 'package:nave_fp_uol/src/data/repositories/user/user_repository.dart';
 import 'package:nave_fp_uol/src/domain_models/failures.dart';
@@ -140,10 +140,54 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
       emit,
       onError: (failure) {
         emit(
-          KanbanBoardError(),
+          KanbanBoardFailed(),
         );
       },
     );
+  }
+
+  Future<void> createUserTask({
+    required String title,
+    required TaskStatus status,
+  }) async {
+    final currentState = state;
+    if (currentState is KanbanBoardLoaded) {
+      final List<TaskSummaryVM> targetList;
+      switch (status) {
+        case TaskStatus.toDo:
+          targetList = currentState.toDoTaskSummaryList;
+          break;
+        case TaskStatus.inProgress:
+          targetList = currentState.inProgressTaskSummaryList;
+          break;
+        case TaskStatus.done:
+          targetList = currentState.doneTaskSummaryList;
+          break;
+      }
+
+      final selectedSortKey = targetList.computeSelectedSortKey(
+        targetList.length,
+        null,
+      );
+
+      final result = await _taskRepository.createUserTask(
+        title: title,
+        selectedSortKey: selectedSortKey,
+        status: status,
+      );
+
+      result.fold((failure) {
+        emit(
+          currentState.copyWith(
+            createUserTaskFailure: failure,
+          ),
+        );
+
+        if (failure is! UnauthenticatedUserFailure) {
+          _errorReporter.reportFailure(failure);
+        }
+      }, (_) {});
+    }
   }
 
   Future<void> updateTaskPlacement({
@@ -158,18 +202,11 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
         ..._userTasksSubject.value ?? []
       ];
       final task = domainTaskList.firstWhereOrNull((task) => task.id == taskId);
-      final List<TaskSummaryVM> targetList;
-      switch (status) {
-        case TaskStatus.toDo:
-          targetList = currentState.toDoTaskSummaryList;
-          break;
-        case TaskStatus.inProgress:
-          targetList = currentState.inProgressTaskSummaryList;
-          break;
-        case TaskStatus.done:
-          targetList = currentState.doneTaskSummaryList;
-          break;
-      }
+      final List<TaskSummaryVM> targetList = switch (status) {
+        TaskStatus.toDo => currentState.toDoTaskSummaryList,
+        TaskStatus.inProgress => currentState.inProgressTaskSummaryList,
+        TaskStatus.done => currentState.doneTaskSummaryList,
+      };
 
       final newSelectedSortKey =
           targetList.computeSelectedSortKey(index, taskId);
@@ -207,10 +244,15 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
     }
   }
 
-  // TODO: Delete this.
-  Future<void> signOut() async {
-    final userRepository = sl<UserRepository>();
-    await userRepository.signOut();
+  void resetTaskCreationFailure() {
+    final currentState = state;
+    if (currentState is KanbanBoardLoaded) {
+      emit(
+        currentState.copyWith(
+          createUserTaskFailure: null,
+        ),
+      );
+    }
   }
 
   @override

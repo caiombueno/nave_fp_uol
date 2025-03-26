@@ -67,10 +67,19 @@ class _PageViewKanbanBoardState extends State<PageViewKanbanBoard>
     if (_autoScrollTicker != null) {
       return;
     }
-    _autoScrollTicker = createTicker((_) {
-      _triggerAutoScroll(direction: direction);
-    });
-    _autoScrollTicker!.start();
+
+    Ticker? autoScrollTicker;
+    try {
+      autoScrollTicker = createTicker((_) {
+        _triggerAutoScroll(direction: direction);
+      });
+    } catch (_) {
+      autoScrollTicker = null;
+    }
+
+    _autoScrollTicker = autoScrollTicker;
+
+    _autoScrollTicker?.start();
   }
 
   /// Stops and disposes the ticker.

@@ -6,6 +6,7 @@ import 'package:nave_fp_uol/src/ui/features/auth/forgot_my_password/forgot_my_pa
 import 'package:nave_fp_uol/src/ui/features/auth/form_field_state_models.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/sign_in/state_management/sign_in_cubit.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/sign_in/state_management/sign_in_state.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_spacings.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_expanded_elevated_button.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_unknown_error_snack_bar.dart';
@@ -31,8 +32,10 @@ class SignInScreen extends StatelessWidget implements AutoRouteWrapper {
     return GestureDetector(
       onTap: () => _releaseFocus(context),
       child: Scaffold(
+        backgroundColor: KnotSemanticColors.signInScreenBackground,
         appBar: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle.light,
+          backgroundColor: KnotSemanticColors.signInScreenBackground,
           title: Text(
             l10n.signInAppBarTitle,
           ),

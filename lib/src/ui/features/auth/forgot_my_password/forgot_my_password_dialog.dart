@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/forgot_my_password/state_management/forgot_my_password_cubit.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/forgot_my_password/state_management/forgot_my_password_state.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/form_field_state_models.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_font_sizes.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_spacings.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_in_progress_text_button.dart';
@@ -77,6 +78,8 @@ class _ForgotMyPasswordViewState extends State<ForgotMyPasswordView> {
         return GestureDetector(
           onTap: () => _releaseFocus(context),
           child: AlertDialog(
+            backgroundColor:
+                KnotSemanticColors.forgotMyPasswordDialogBackground,
             title: Text(l10n.forgotMyPasswordDialogTitle),
             content: Column(
               mainAxisSize: MainAxisSize.min,

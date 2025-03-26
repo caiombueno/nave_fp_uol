@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:nave_fp_uol/src/service_locator.dart';
+import 'package:nave_fp_uol/service_locator.dart';
 import 'package:nave_fp_uol/src/data/repositories/user/user_repository.dart';
 import 'package:nave_fp_uol/src/domain_models/failures.dart';
 import 'package:nave_fp_uol/src/services/error_reporter.dart';

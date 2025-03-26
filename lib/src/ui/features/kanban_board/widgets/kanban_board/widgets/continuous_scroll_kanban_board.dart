@@ -65,7 +65,8 @@ class _ContinuousScrollKanbanBoardState
 
   @override
   void dispose() {
-    _autoScrollTicker?.dispose();
+    if (!(_autoScrollTicker?.isActive ?? false)) _autoScrollTicker?.dispose();
+
     _scrollController.dispose();
     super.dispose();
   }
