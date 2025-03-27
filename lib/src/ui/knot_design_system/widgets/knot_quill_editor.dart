@@ -10,22 +10,26 @@ class KnotQuillEditor extends StatefulWidget {
     this.scrollController,
     required this.readOnly,
     this.placeholder,
+    this.onTap,
   });
   final quill.QuillController controller;
   final FocusNode? focusNode;
   final ScrollController? scrollController;
   final bool readOnly;
   final String? placeholder;
+  final void Function()? onTap;
 
   KnotQuillEditor.view({
     required quill.QuillController controller,
     ScrollController? scrollController,
+    void Function()? onTap,
   }) : this._(
           controller: controller,
           scrollController: scrollController,
           focusNode: null,
           readOnly: true,
           placeholder: null,
+          onTap: onTap,
         );
 
   KnotQuillEditor.edit({
@@ -61,6 +65,10 @@ class _KnotQuillEditorState extends State<KnotQuillEditor> {
       controller: widget.controller,
       focusNode: widget.focusNode,
       config: quill.QuillEditorConfig(
+        onTapDown: (details, p1) {
+          widget.onTap?.call();
+          return false;
+        },
         placeholder: widget.placeholder,
         showCursor: !widget.readOnly,
         customStyles: const quill.DefaultStyles(

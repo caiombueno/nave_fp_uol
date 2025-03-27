@@ -52,6 +52,26 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
 
   final _taskRepository = sl<TaskRepository>();
 
+  void editDescription({
+    required List<Map<String, dynamic>> newContent,
+  }) {
+    final state = this.state;
+    if (state is! TaskDetailsLoaded || !state.task.isUserTask) {
+      return;
+    }
+
+    final encodedContent = newContent.toEncodedContentOrNull();
+
+    if (encodedContent == null) {
+      return;
+    }
+
+    _taskRepository.updateUserTaskDescription(
+      taskId: taskId,
+      newContent: encodedContent,
+    );
+  }
+
   void createNote({
     required List<Map<String, dynamic>> content,
   }) {

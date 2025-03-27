@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -88,7 +89,13 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
                   },
                   onTaskTapped: (taskId) {
                     if (taskId == null) return;
-                    context.router.push(TaskDetailsRoute(taskId: taskId));
+
+                    context.router.push(
+                      TaskDetailsRoute(
+                        taskId: taskId,
+                        isUserTask: state.isTaskUserTask(taskId),
+                      ),
+                    );
                   },
                   onCreateTask: (status, title) async {
                     final cubit = context.read<KanbanBoardCubit>();
@@ -136,5 +143,17 @@ class KanbanBoardScreen extends StatelessWidget implements AutoRouteWrapper {
         },
       ),
     );
+  }
+}
+
+extension on KanbanBoardLoaded {
+  bool isTaskUserTask(String taskId) {
+    final task =
+        (toDoTaskSummaryList.firstWhereOrNull((task) => task.id == taskId)) ??
+            (inProgressTaskSummaryList
+                .firstWhereOrNull((task) => task.id == taskId)) ??
+            (doneTaskSummaryList.firstWhereOrNull((task) => task.id == taskId));
+
+    return task is UserTaskSummaryVM;
   }
 }

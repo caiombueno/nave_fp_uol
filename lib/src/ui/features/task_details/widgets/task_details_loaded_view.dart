@@ -35,11 +35,10 @@ class TaskDetailsLoadedView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (descriptionContent != null)
-            TaskDetailsDescription(
-              descriptionContent: descriptionContent,
-              isUserTask: isUserTask,
-            ),
+          TaskDetailsDescription(
+            descriptionContent: descriptionContent,
+            isUserTask: isUserTask,
+          ),
           if (lessons != null) ...[
             sectionGap,
             TaskDetailsLessonsSection(lessons: lessons),
