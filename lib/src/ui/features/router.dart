@@ -24,7 +24,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: SignInRoute.page,
-          fullscreenDialog: true,
+          fullscreenDialog: false,
           initial: false,
         ),
       ];

@@ -40,5 +40,6 @@
     "taskDetailsNotesSectionAddNoteModalHint": "Write your note",
     "videoLessonScreenFailedMessage": "An error occurred while loading the lesson. Please try again later.",
     "textLessonScreenFailedMessage": "An error occurred while loading the lesson. Please try again later.",
-    "kanbanBoardScreenFailedMessage": "An error occurred while loading the board. Please try again later."
+    "kanbanBoardScreenFailedMessage": "An error occurred while loading the board. Please try again later.",
+    "done": "Done"
 }

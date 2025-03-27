@@ -40,5 +40,6 @@
   "taskDetailsNotesSectionAddNoteModalHint": "Escreva sua anotação",
   "videoLessonScreenFailedMessage": "Ocorreu um erro ao carregar a aula. Por favor, tente novamente mais tarde.",
   "textLessonScreenFailedMessage": "Ocorreu um erro ao carregar a aula. Por favor, tente novamente mais tarde.",
-  "kanbanBoardScreenFailedMessage": "Ocorreu um erro ao carregar o quadro. Por favor, tente novamente mais tarde."
+  "kanbanBoardScreenFailedMessage": "Ocorreu um erro ao carregar o quadro. Por favor, tente novamente mais tarde.",
+  "done": "Concluir"
 }

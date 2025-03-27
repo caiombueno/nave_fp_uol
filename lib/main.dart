@@ -11,6 +11,7 @@ import 'package:nave_fp_uol/src/data/data_sources/synced/core/field_value_mapper
 import 'package:nave_fp_uol/src/services/analytics/analytics_client.dart';
 import 'package:nave_fp_uol/src/services/analytics/core/analytics_navigator_observer.dart';
 import 'package:nave_fp_uol/src/ui/features/router.dart';
+import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timezone/data/latest_all.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,8 +32,8 @@ void main() async {
   await _initSentry();
 
   runApp(
-    SentryWidget(
-      child: const MyApp(),
+    const SentryWidget(
+      child: MyApp(),
     ),
   );
 }
@@ -69,9 +70,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Nave',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: KnotCoreColors.blue),
         useMaterial3: true,
       ),
       routerConfig: sl<AppRouter>().config(

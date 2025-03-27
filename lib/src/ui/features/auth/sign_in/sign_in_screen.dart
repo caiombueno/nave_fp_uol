@@ -6,6 +6,7 @@ import 'package:nave_fp_uol/src/ui/features/auth/forgot_my_password/forgot_my_pa
 import 'package:nave_fp_uol/src/ui/features/auth/form_field_state_models.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/sign_in/state_management/sign_in_cubit.dart';
 import 'package:nave_fp_uol/src/ui/features/auth/sign_in/state_management/sign_in_state.dart';
+import 'package:nave_fp_uol/src/ui/features/router.gr.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_spacings.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_expanded_elevated_button.dart';
@@ -99,7 +100,7 @@ class _SignInFormState extends State<_SignInForm> {
           oldState.submissionStatus != newState.submissionStatus,
       listener: (context, state) {
         if (state.submissionStatus == SubmissionStatus.success) {
-          context.router.maybePop(true);
+          context.router.navigate(KanbanBoardRoute());
           return;
         }
 
@@ -215,11 +216,7 @@ class _SignInFormState extends State<_SignInForm> {
               child: Text(
                 l10n.signInJoinCtaLabel,
               ),
-              onPressed: isSubmissionInProgress
-                  ? null
-                  : () {
-                      // TODO: Abrir página de vendas no navegador.
-                    },
+              onPressed: isSubmissionInProgress ? null : () {},
             ),
           ],
         );

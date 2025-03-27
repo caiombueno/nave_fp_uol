@@ -55,10 +55,7 @@ class AuthDataSource {
     String email,
   ) async {
     try {
-      await _firebaseAuth.sendPasswordResetEmail(
-        email: email,
-        // TODO: Specify the actionCodeSettings parameter for deep linking from the email.
-      );
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
 
       return right(null);
     } catch (error, stackTrace) {

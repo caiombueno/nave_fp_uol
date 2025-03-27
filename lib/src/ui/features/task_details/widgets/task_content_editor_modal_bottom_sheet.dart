@@ -5,6 +5,7 @@ import 'package:nave_fp_uol/src/ui/knot_design_system/tokens/knot_colors.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_icon_button.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_quill_editor.dart';
 import 'package:nave_fp_uol/src/ui/knot_design_system/widgets/knot_text_button.dart';
+import 'package:nave_fp_uol/src/utils/extensions/build_context_extensions.dart';
 import 'package:nave_fp_uol/src/utils/extensions/flutter_quill_extensions.dart';
 
 class TextContentEditorModalBottomSheet extends StatefulWidget {
@@ -138,7 +139,7 @@ class _TextContentEditorModalBottomSheetState
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: KnotTextButton.secondary(
-                            label: 'Concluir',
+                            label: context.l10n.done,
                             onPressed: () {
                               widget.onConcluded(
                                 _controller.document.toJson(),
