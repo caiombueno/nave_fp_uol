@@ -8,7 +8,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: '/tasks',
           page: KanbanBoardRoute.page,
-          initial: true,
+          initial: false,
         ),
         AutoRoute(
           path: '/tasks/:taskId',
@@ -25,7 +25,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: SignInRoute.page,
           fullscreenDialog: false,
-          initial: false,
+          initial: true,
         ),
       ];
 }

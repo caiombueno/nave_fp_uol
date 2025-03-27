@@ -51,13 +51,12 @@ class _KanbanColumnCardListState extends State<KanbanColumnCardList>
 
   @override
   void didUpdateWidget(covariant KanbanColumnCardList oldWidget) {
-    if (oldWidget.draggingTaskId != widget.draggingTaskId) {
-      setState(() {
-        _tasks = widget.tasks
-            .whereNot((task) => task.id == widget.draggingTaskId)
-            .toList();
-      });
-    }
+    setState(() {
+      _tasks = widget.tasks
+          .whereNot((task) => task.id == widget.draggingTaskId)
+          .toList();
+    });
+
     super.didUpdateWidget(oldWidget);
   }
 

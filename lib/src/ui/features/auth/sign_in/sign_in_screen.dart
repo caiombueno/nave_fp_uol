@@ -145,6 +145,7 @@ class _SignInFormState extends State<_SignInForm> {
               onChanged: cubit.onEmailChanged,
               textInputAction: TextInputAction.next,
               autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 suffixIcon: const Icon(
                   Icons.alternate_email,
@@ -165,6 +166,7 @@ class _SignInFormState extends State<_SignInForm> {
               focusNode: _passwordFocusNode,
               onChanged: cubit.onPasswordChanged,
               obscureText: true,
+              keyboardType: TextInputType.text,
               onEditingComplete: cubit.onSubmit,
               decoration: InputDecoration(
                 suffixIcon: const Icon(
